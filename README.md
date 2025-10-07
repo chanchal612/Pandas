@@ -1,296 +1,192 @@
 # Pandas
  Pandas
-# 🧠 What is Pandas?
+🧠 Introduction to Pandas
 
-Pandas is a Python library used for data analysis and manipulation.
-It allows you to:
+Pandas is one of the most useful libraries in Python for data handling and analysis.
+It helps you organize and study data just like you would in Excel or a database table — but with much more speed and flexibility.
 
-Handle tabular data (like Excel or CSV files)
+💡 Why use Pandas?
 
-Perform data cleaning, filtering, sorting, and aggregation
+You can easily read, modify, and save data from CSV, Excel, or JSON files.
 
-Analyze large datasets easily
+It makes data cleaning and analysis very simple.
 
+It works well with other libraries like NumPy, Matplotlib, and Scikit-learn.
 
-It’s built on top of NumPy and integrates well with Matplotlib, Scikit-learn, etc.
+👉 To start using it:
 
-To start using pandas:
-
-```bash
 import pandas as pd
 
-```
+📊 Main Data Structures in Pandas
 
+Pandas provides two main data containers:
 
----
+1️⃣ Series – Single Column Data
 
-# 📘 Main Data Structures
+A Series is like a list with labels.
+It stores one-dimensional data with an index attached to each value.
 
-## 1. Series – One-dimensional labeled array
-
-### Example:
-
-``` bash
+Example:
 import pandas as pd
 
-# Creating a Series
-s = pd.Series([10, 20, 30, 40, 50], index=['a', 'b', 'c', 'd', 'e'])
-print(s)
-```
+scores = pd.Series([55, 60, 72, 88], index=['A', 'B', 'C', 'D'])
+print(scores)
 
-### Output:
-
-``` bash
-a    10
-b    20
-c    30
-d    40
-e    50
+Output:
+A    55
+B    60
+C    72
+D    88
 dtype: int64
-```
 
----
 
-## 2. DataFrame – Two-dimensional table (rows + columns)
+Here each value (55, 60, 72, 88) has a label (A, B, C, D).
+You can think of it like a dictionary where labels are keys.
 
-### Example:
+2️⃣ DataFrame – Table with Rows and Columns
 
-```bash
-data = {
-    'Name': ['Ujjawal', 'Rohan', 'Priya'],
-    'Age': [20, 22, 19],
-    'Marks': [85, 90, 95]
+A DataFrame is a 2D table, similar to an Excel sheet.
+It can store multiple columns of different data types.
+
+Example:
+students = {
+    'Student': ['Arjun', 'Meera', 'Kabir', 'Simran'],
+    'Age': [18, 19, 18, 20],
+    'Score': [82, 90, 75, 88]
 }
 
-df = pd.DataFrame(data)
+df = pd.DataFrame(students)
 print(df)
-```
 
-### Output:
-
-```bash
-Name  Age  Marks
-0  Ujjawal   20     85
-1    Rohan   22     90
-2    Priya   19     95
-```
-
-👉 A DataFrame is like an Excel sheet or SQL table.
+Output:
+  Student  Age  Score
+0   Arjun   18     82
+1   Meera   19     90
+2   Kabir   18     75
+3  Simran   20     88
 
 
----
+👉 Each column is actually a Series combined together.
 
-# 📂 Reading and Writing Data
+📁 Reading and Writing Data
+🔹 Reading Data:
+data = pd.read_csv("students.csv")  # Read CSV file
 
-## Read data:
-
-```bash
-# Read from CSV file
-df = pd.read_csv("data.csv")
-```
-
-## Write data:
-
-```bash
-# Save DataFrame to CSV file
-df.to_csv("output.csv", index=False)
-```
+🔹 Writing Data:
+df.to_csv("result.csv", index=False)  # Save DataFrame to file
 
 
----
+Pandas supports many formats — like Excel (.xlsx), JSON, and SQL databases.
 
-# 🔍 DataFrame Basic Operations
+🧩 Exploring the Data
+View first or last few records
+df.head()   # First 5 rows
+df.tail(3)  # Last 3 rows
 
-## 1. View top and bottom rows
-
-```bash
-print(df.head())   # First 5 rows
-print(df.tail())   # Last 5 rows
-```
-
-
----
-
-## 2. Get info about data
-
-```bash
-print(df.info())
-print(df.describe())
-```
-
-### Output:
-
-``` bash
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 3 entries, 0 to 2
-Data columns (total 3 columns):
- #   Column  Non-Null Count  Dtype  
----  ------  --------------  -----  
- 0   Name    3 non-null      object 
- 1   Age     3 non-null      int64  
- 2   Marks   3 non-null      int64
-```
+Get info about the dataset
+df.info()
+df.describe()
 
 
----
+These give details like data types, missing values, and summary statistics.
 
-## 3. Accessing Data
+🔍 Accessing and Selecting Data
+Selecting Columns
+df['Student']         # Single column
+df[['Student', 'Score']]  # Multiple columns
 
-```bash
-# Access single column
-print(df['Name'])
+Selecting Rows
+df.iloc[2]            # Row by index number
+df.loc[1, 'Score']    # Specific value using label
 
-# Access multiple columns
-print(df[['Name', 'Marks']])
+Example Output:
+75
 
-# Access specific row (by index)
-print(df.iloc[1])  # row 1
+🧮 Adding, Updating, and Deleting Data
+Add new column
+df['Grade'] = ['B', 'A+', 'C', 'A']
 
-# Access using label-based indexing
-print(df.loc[0, 'Name'])
-```
+Update column
+df['Score'] = df['Score'] + 5  # Adding 5 marks to all students
 
-
----
-
-## 4. Adding and Removing Columns
-
-```bash
-# Add a new column
-df['Grade'] = ['B', 'A', 'A+']
-
-# Delete a column
+Remove a column
 df.drop('Age', axis=1, inplace=True)
 
-print(df)
-``` 
+Output:
+  Student  Score Grade
+0   Arjun     87     B
+1   Meera     95    A+
+2   Kabir     80     C
+3  Simran     93     A
 
-### Output:
+🔦 Filtering and Sorting
+Filter rows based on condition
+high_scorers = df[df['Score'] > 85]
+print(high_scorers)
 
-``` bash
-Name  Marks Grade
-0  Ujjawal     85     B
-1    Rohan     90     A
-2    Priya     95    A+
-```
+Sort the DataFrame
+df.sort_values(by='Score', ascending=False)
 
+Output:
+  Student  Score Grade
+1   Meera     95    A+
+3  Simran     93     A
+0   Arjun     87     B
+2   Kabir     80     C
 
----
+🧹 Handling Missing or Incomplete Data
+data = {
+    'Name': ['Amit', None, 'Riya'],
+    'Marks': [90, None, 78]
+}
 
-## 5. Filtering Data
-
-```bash
-# Show students who scored more than 85
-print(df[df['Marks'] > 85])
-```
-
-### Output:
-
-```bash
-Name  Marks Grade
-1  Rohan     90     A
-2  Priya     95    A+
-```
-
-
----
-
-## 6. Sorting Data
-
-``` bash
-# Sort by marks
-print(df.sort_values(by='Marks', ascending=False))
-``` 
-
-### Output:
-
-```bash
-Name  Marks Grade
-2  Priya     95    A+
-1  Rohan     90     A
-0  Ujjawal   85     B
-```
-
-
----
-
-## 7. Handling Missing Data
-
-```bash
-data = {'Name': ['Ujjawal', 'Rohan', None],
-        'Marks': [85, None, 90]}
 df2 = pd.DataFrame(data)
 
-# Fill missing values
-df2_filled = df2.fillna({'Name': 'Unknown', 'Marks': 0})
+# Fill missing data
+df2.fillna({'Name': 'Unknown', 'Marks': 0}, inplace=True)
 
-print(df2_filled)
-```
+Output:
+     Name  Marks
+0    Amit   90.0
+1  Unknown    0.0
+2    Riya   78.0
 
-### Output:
+🔗 Combining DataFrames
+Merging Data
+info = pd.DataFrame({'Roll': [1, 2, 3], 'Name': ['Amit', 'Riya', 'Karan']})
+marks = pd.DataFrame({'Roll': [1, 2, 3], 'Score': [85, 90, 88]})
 
-``` bash
-Name  Marks
-0  Ujjawal   85.0
-1    Rohan    0.0
-2  Unknown   90.0
-```
-
----
-
-## 8. Grouping Data
-
-``` bash
-data = {
-    'Department': ['CS', 'IT', 'CS', 'IT'],
-    'Marks': [85, 90, 75, 80]
-}
-df3 = pd.DataFrame(data)
-
-print(df3.groupby('Department')['Marks'].mean())
-``` 
-
-## Output:
-
-``` bash
-Department
-CS    80.0
-IT    85.0
-Name: Marks, dtype: float64
-```
-
-
----
-
-## 9. Merging and Joining
-
-```bash
-df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Ujjawal', 'Rohan', 'Priya']})
-df2 = pd.DataFrame({'ID': [1, 2, 3], 'Marks': [85, 90, 95]})
-
-merged = pd.merge(df1, df2, on='ID')
+merged = pd.merge(info, marks, on='Roll')
 print(merged)
-```
 
-## Output:
+Output:
+   Roll   Name  Score
+0     1   Amit     85
+1     2   Riya     90
+2     3  Karan     88
 
-```bash
-ID     Name  Marks
-0   1  Ujjawal     85
-1   2    Rohan     90
-2   3    Priya     95
-```
+📊 Grouping and Aggregation
 
+Grouping helps summarize large datasets.
 
----
+Example:
+data = {
+    'Department': ['CS', 'CS', 'IT', 'IT', 'IT'],
+    'Marks': [85, 78, 92, 80, 75]
+}
 
-## 10. Exporting Data
+df3 = pd.DataFrame(data)
+avg_marks = df3.groupby('Department')['Marks'].mean()
+print(avg_marks)
 
-```bash
-# Save to Excel
-df.to_excel("students.xlsx", index=False)
+Output:
+Department
+CS    81.5
+IT    82.3
+Name: Marks, dtype: float64
 
+💾 Exporting Data to Other Formats
+df.to_excel("student_data.xlsx", index=False)
+df.to_json("student_data.json", orient='records')
 
-# Save to JSON
-df.to_json("students.json", orient='records')
-```
+🌟 Summary
